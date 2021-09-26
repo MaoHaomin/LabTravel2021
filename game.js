@@ -172,6 +172,10 @@ function draw() {
   player.update();
   player.draw();
   drawTime();
+  if (gameState === 4) {
+    const distance = dist(player.x, player.y, 250+20, 450+20);
+    if (distance < 20) player.judgeClear();
+  }
 }
 
 //global functions in draw
@@ -357,7 +361,6 @@ class Player {
       this.speedY = 0;
       this.speedX = 0;
       this.isJumping = false;
-      this.judgeClear();
     }
     
     if ((this.speedY === 0) && this.isDroppedFromBlock(block)) {
@@ -377,14 +380,12 @@ class Player {
   }
 
   judgeClear(blockIndex) {
-    if (gameState == 3 && blockIndex === 3) {
       fill('yellow');
       textSize(64);
       stroke(0);
       text('CLEAR!', width/2, height/2);
       clearSound.play();
       noLoop();
-    }
   }
 
   calcYDistanceFromFloor(block) {
